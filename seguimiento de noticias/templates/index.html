@@ -2,36 +2,63 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi App Profesional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Noticias - Polar</title>
     <style>
-        body { font-family: 'Arial', sans-serif; background: #1a1a1a; color: white; padding: 50px; }
-        .caja { background: #2d2d2d; padding: 20px; border-radius: 10px; border-left: 5px solid #00ffcc; }
-        input, select { padding: 10px; margin: 10px 0; width: 100%; border-radius: 5px; border: none; }
-        button { background: #00ffcc; color: black; font-weight: bold; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
-        .noticia { background: #3d3d3d; margin-top: 10px; padding: 10px; border-radius: 5px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #121212; color: white; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 15px; border-left: 5px solid #00E5BC; }
+        h1 { text-align: center; color: #00E5BC; }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        input, select, button { padding: 12px; margin-top: 5px; border-radius: 8px; border: none; font-size: 16px; }
+        input, select { background: #2d2d2d; color: white; border: 1px solid #444; }
+        input[type="file"] { cursor: pointer; background: #252525; }
+        button { background: #00E5BC; color: #121212; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #00c4a3; }
+        .noticia-card { background: #252525; padding: 15px; border-radius: 10px; margin-top: 20px; border-bottom: 2px solid #333; }
+        .noticia-img { width: 100%; border-radius: 8px; margin-top: 10px; display: block; }
+        .tag { display: inline-block; padding: 3px 8px; border-radius: 5px; font-size: 12px; background: #00E5BC; color: black; margin-bottom: 5px; }
     </style>
 </head>
 <body>
-    <h1>🚀 Monitor de Noticias - Backend Real</h1>
-    
-    <div class="caja">
-        <h3>Agregar Nueva Noticia</h3>
-        <form action="/agregar" method="POST">
-            <input type="text" name="titulo" placeholder="Título de la noticia" required>
-            <select name="sentimiento">
-                <option value="Positivo">Positivo</option>
-                <option value="Neutro">Neutro</option>
-                <option value="Negativo">Negativo</option>
-            </select>
+    <div class="container">
+        <h1>🚀 Monitor de Noticias Real</h1>
+        
+        <form action="/agregar" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Título de la Noticia:</label>
+                <input type="text" name="titulo" placeholder="¿Qué pasó hoy?" required>
+            </div>
+
+            <div class="form-group">
+                <label>Estado/Sentimiento:</label>
+                <select name="sentimiento">
+                    <option value="Positivo">😊 Positivo</option>
+                    <option value="Neutral">😐 Neutral</option>
+                    <option value="Crítico">🚨 Crítico / Urgente</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>📸 Subir Evidencia:</label>
+                <input type="file" name="foto" accept="image/*">
+            </div>
+
             <button type="submit">Guardar en Base de Datos</button>
         </form>
-    </div>
 
-    <h2>Noticias Guardadas:</h2>
-    {% for n in noticias %}
-    <div class="noticia">
-        <strong>{{ n.titulo }}</strong> - <small>{{ n.sentimiento }}</small>
+        <hr style="margin-top: 30px; border: 0.5px solid #333;">
+        <h2>Noticias Guardadas:</h2>
+
+        {% for noticia in noticias %}
+        <div class="noticia-card">
+            <span class="tag">{{ noticia.sentimiento }}</span>
+            <h3>{{ noticia.titulo }}</h3>
+            {% if noticia.foto_url %}
+                <img src="{{ noticia.foto_url }}" class="noticia-img" alt="Evidencia">
+            {% endif %}
+            <small style="color: #888;">ID: {{ noticia.id }} | {{ noticia.created_at }}</small>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </body>
 </html>
