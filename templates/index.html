@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi App Profesional</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #1a1a1a; color: white; padding: 50px; }
+        .caja { background: #2d2d2d; padding: 20px; border-radius: 10px; border-left: 5px solid #00ffcc; }
+        input, select { padding: 10px; margin: 10px 0; width: 100%; border-radius: 5px; border: none; }
+        button { background: #00ffcc; color: black; font-weight: bold; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+        .noticia { background: #3d3d3d; margin-top: 10px; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Monitor de Noticias - Backend Real</h1>
+    
+    <div class="caja">
+        <h3>Agregar Nueva Noticia</h3>
+        <form action="/agregar" method="POST">
+            <input type="text" name="titulo" placeholder="Título de la noticia" required>
+            <select name="sentimiento">
+                <option value="Positivo">Positivo</option>
+                <option value="Neutro">Neutro</option>
+                <option value="Negativo">Negativo</option>
+            </select>
+            <button type="submit">Guardar en Base de Datos</button>
+        </form>
+    </div>
+
+    <h2>Noticias Guardadas:</h2>
+    {% for n in noticias %}
+    <div class="noticia">
+        <strong>{{ n.titulo }}</strong> - <small>{{ n.sentimiento }}</small>
+    </div>
+    {% endfor %}
+</body>
+</html>
