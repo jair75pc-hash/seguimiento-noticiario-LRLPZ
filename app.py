@@ -12,10 +12,10 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 @app.route('/')
 def index():
-    # Usamos el nombre de tu tabla: "titulo"
+    # Usamos el nombre de tu tabla: "Titulo"
     try:
         # Intentamos traer los datos de la tabla que creaste
-        response = supabase.table("titulo").select("*").order("id", desc=True).execute()
+        response = supabase.table("Título").select("*").order("id", desc=True).execute()
         noticias = response.data
     except Exception as e:
         print(f"Error al leer de Supabase: {e}")
@@ -25,7 +25,7 @@ def index():
 
 @app.route('/agregar', methods=['POST'])
 def agregar():
-    titulo_form = request.form.get('titulo') 
+    Título_form = request.form.get('Título') 
     sentimiento = request.form.get('sentimiento')
     foto = request.files.get('foto')
     foto_url = ""
